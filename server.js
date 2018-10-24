@@ -2,9 +2,9 @@ const express = require('express');
 const logger = require('morgan');
 
 // route
-const user = require('./routes/userRoute');
-const artis = require('./routes/artisRoute');
-const genre = require('./routes/genreRoute');
+const user = require('./app/routes/userRoute');
+const artis = require('./app/routes/artisRoute');
+const genre = require('./app/routes/genreRoute');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database');

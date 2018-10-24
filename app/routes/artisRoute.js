@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const artisController = require('../app/api/controllers/artis');
+const artisController = require('../api/controllers/artis');
 
 router.get('/read', artisController.getAll);
 router.post('/create', artisController.create);
