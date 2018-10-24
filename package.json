@@ -1,0 +1,20 @@
+{
+  "name": "now-playing-be",
+  "version": "0.0.10",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "now-playing",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "js-sha1": "^0.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.5",
+    "morgan": "^1.9.1"
+  }
+}
