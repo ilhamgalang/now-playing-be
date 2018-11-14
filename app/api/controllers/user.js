@@ -26,7 +26,8 @@ module.exports = {
           userModel.create({
             username: req.body.username,
             name: req.body.name,
-            password: req.body.password
+            password: req.body.password,
+            photo: 'img/default-photo.svg'
           }, function(err, result) {
             if (err) {
                 next(err);
