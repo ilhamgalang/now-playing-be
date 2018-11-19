@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -47,9 +47,11 @@ app.get('/', function(req, res){
 // public route
 app.use('/user', user);
 
+app.use('/genre', genre);
+
 // private route
-app.use('/artis', validateUser, artis);
-app.use('/genre', validateUser, genre);
+// app.use('/artis', validateUser, artis);
+// app.use('/genre', validateUser, genre);
 
 app.get('/favicon.ico', function(req, res) {
   res.sendStatus(204);
@@ -57,6 +59,7 @@ app.get('/favicon.ico', function(req, res) {
 
 // cek token
 function validateUser(req, res, next) {
+  console.log(req.headers['x-access-token']);
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
       res.json({

@@ -11,7 +11,8 @@ module.exports = {
         for (let data of result) {
           genreList.push({
             id: data._id,
-            genre: data.genre
+            genre: data.genre,
+            image: data.image
           });
         }
         res.json({
@@ -25,7 +26,8 @@ module.exports = {
 
   create: function(req, res, next) {
     genreModel.create({
-      genre: req.body.genre
+      genre: req.body.genre,
+      image: req.body.image
     }, function(err, result) {
       if (err) {
         next(err);
