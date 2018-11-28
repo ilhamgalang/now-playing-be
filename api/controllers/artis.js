@@ -3,7 +3,6 @@ const artisModel = require('../models/artisModel');
 module.exports = {
 
   getById: function(req, res, next) {
-    console.log(req.body);
     artisModel.findById(req.params.artisId, function(err, artisInfo) {
       if (err) {
         next(err);
@@ -19,7 +18,16 @@ module.exports = {
 
   getAll: function(req, res, next) {
     let artisList = [];
-    artisModel.find({}, function(err, result) {
+    var filter = {};
+    if (req.query.filter != undefined) {
+      if (req.query.filter != 'all') {
+        filter = '^' + req.query.filter;              
+      }
+    }
+    console.log(req.query.filter);
+    console.log(filter);
+    
+    artisModel.find({ "name" : { $regex : new RegExp(filter, "i") } }, function(err, result) {
       if (err) {
         next(err);
       } else {
@@ -27,7 +35,8 @@ module.exports = {
           artisList.push({
             id: data._id,
             name: data.name,
-            genre: data.genre
+            genre: data.genre,
+            image: data.image
           });
         }
         res.json({

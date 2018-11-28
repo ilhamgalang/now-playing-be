@@ -4,6 +4,11 @@ module.exports = {
 
   getAll: function(req, res, next) {
     let genreList = [];
+    var sort = {};
+    if (req.query.sortKey != undefined) {
+      sort[req.query.sortKey] = req.query.sortValue;      
+    }
+
     genreModel.find({}, function(err, result) {
       if (err) {
         next(err);
@@ -21,7 +26,7 @@ module.exports = {
           data: genreList
         });
       }
-    });
+    }).sort(sort);
   },
 
   create: function(req, res, next) {

@@ -2,9 +2,9 @@ const express = require('express');
 const logger = require('morgan');
 
 // route
-const user = require('./app/routes/userRoute');
-const artis = require('./app/routes/artisRoute');
-const genre = require('./app/routes/genreRoute');
+const user = require('./api/routes/userRoute');
+const artis = require('./api/routes/artisRoute');
+const genre = require('./api/routes/genreRoute');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database');
@@ -22,20 +22,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 // Add headers
 app.use(function (req, res, next) {
-
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
-
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
-
     // Pass to next layer of middleware
     next();
 });
@@ -47,7 +42,8 @@ app.get('/', function(req, res){
 // public route
 app.use('/user', user);
 
-app.use('/genre', genre);
+app.use('/api/genre', genre);
+app.use('/api/artis', artis);
 
 // private route
 // app.use('/artis', validateUser, artis);
@@ -59,7 +55,6 @@ app.get('/favicon.ico', function(req, res) {
 
 // cek token
 function validateUser(req, res, next) {
-  console.log(req.headers['x-access-token']);
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
       res.json({

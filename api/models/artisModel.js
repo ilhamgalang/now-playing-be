@@ -13,6 +13,11 @@ const ArtisSchema = new Schema({
     type: Array,
     trim: true,
     required: false
+  },
+  image: {
+    type: String,
+    trim: true,
+    required: true
   }
 });
 
