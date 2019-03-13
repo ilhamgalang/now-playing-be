@@ -13,6 +13,8 @@ const mongoose = require('./config/database');
 var jwt = require('jsonwebtoken');
 const app = express();
 
+var port = process.env.PORT || 3000;
+
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 
 // connection to mongodb
@@ -99,6 +101,6 @@ app.use(function(err, req, res, next) {
   }
 });
 
-app.listen(96, function(){
+app.listen(port, function(){
   console.log('Node server listening on port 96');
 });
