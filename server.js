@@ -2,9 +2,10 @@ const express = require('express');
 const logger = require('morgan');
 
 // route
-const user = require('./api/routes/userRoute');
-const artis = require('./api/routes/artisRoute');
-const genre = require('./api/routes/genreRoute');
+const routeController = require('./routes');
+// const user = require('./api/routes/userRoute');
+// const artis = require('./api/routes/artisRoute');
+// const genre = require('./api/routes/genreRoute');
 
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database');
@@ -19,11 +20,11 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 // Add headers
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
@@ -34,16 +35,19 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+// Serving static files
+app.use('/static', express.static('assets'));
 
 app.get('/', function(req, res){
  res.json({"welcome" : "Now Playing"});
 });
 
 // public route
-app.use('/user', user);
+// app.use('/user', user);
+app.use('/api', routeController)
 
-app.use('/api/genre', genre);
-app.use('/api/artis', artis);
+// app.use('/api/genre', genre);
+// app.use('/api/artis', artis);
 
 // private route
 // app.use('/artis', validateUser, artis);
